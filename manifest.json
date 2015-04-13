@@ -1,5 +1,5 @@
 {
-    "name": "Account Integration",
+    "name": "AccountIntegration",
     "version": "1.0.0",
     "acceptableVersions": [
         ">=3.0.0"

@@ -1,1 +1,26 @@
-[{"label":"Overview","rows":[[{"name":"name"}],[{"name":"status"},{"name":"account"}],[{"name":"description","fullWidth":true}]]}]
+[
+  {
+    "label": "Transaction",
+    "rows": [
+      [
+        {
+          "name": "accountId"
+        }
+      ],
+      [
+        {
+          "name": "transactionType"
+        },
+        {
+          "name": "date"
+        }
+      ],
+      [
+        {
+          "name": "memo",
+          "fullWidth": true
+        }
+      ]
+    ]
+  }
+]

@@ -7,8 +7,8 @@ class AfterInstall
         $config = $conatiner->get('config');
 
         $tabList = $config->get('tabList');
-        if (!in_array('Project', $tabList)) {
-            $tabList[] = 'Project';
+        if (!in_array('AccountIntegration', $tabList)) {
+            $tabList[] = 'AccountIntegration';
             $config->set('tabList', $tabList);
         }
 

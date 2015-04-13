@@ -1,1 +1,4 @@
-["name","status","assignedUser","account"]
+[
+	"accountId",
+	"assignedUserId"
+]

@@ -1,1 +1,4 @@
-["assignedUser","status","teams"]
+[
+  "assignedUserId",
+  "transactionType"
+]

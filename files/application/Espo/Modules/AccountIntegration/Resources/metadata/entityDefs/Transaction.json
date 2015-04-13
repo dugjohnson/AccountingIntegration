@@ -1,25 +1,52 @@
 {
    "fields":{
-      "name":{
+      "id":{
          "type":"varchar",
-         "required":true
+         "required":true,
+         "maxLength" : 24
       },
-      "status":{
+      "accountId":{
+         "type":"varchar",
+         "required":true,
+         "maxLength" : 24
+      },
+      "transactionType":{
          "type":"enum",
          "options":[
-            "Draft",
-            "Active",
-            "Completed",
-            "On Hold",
-            "Dropped"
-         ],
-         "default":"Active"
+            "P",
+            "S"
+         ]
       },
-      "description":{
+      "date":{
+         "type":"datetime",
+         "readOnly":true
+      },
+      "transNumber":{
+         "type":"varchar",
+         "required":true,
+         "maxLength" : 10
+      },
+      "acctNumber":{
+          "type":"varchar",
+         "required":true,
+         "maxLength" : 10
+      },
+      "item":{
+         "type":"varchar",
+         "required":true,
+         "maxLength" : 50
+      },
+      "memo":{
          "type":"text"
       },
-      "account":{
-         "type":"link"
+      "qty":{
+         "type":"int"
+      },
+      "price":{
+         "type":"decimal"
+      },
+      "total":{
+         "type":"decimal"
       },
       "createdAt":{
          "type":"datetime",
@@ -29,49 +56,31 @@
          "type":"datetime",
          "readOnly":true
       },
-      "createdBy":{
+      "createdById":{
          "type":"link",
          "readOnly":true
       },
-      "modifiedBy":{
+      "modifiedById":{
          "type":"link",
          "readOnly":true
       },
-      "assignedUser":{
+      "assignedUserId":{
          "type":"link",
          "required":true
-      },
-      "teams":{
-         "type":"linkMultiple"
       }
    },
    "links":{
-      "createdBy":{
+      "createdById":{
          "type":"belongsTo",
          "entity":"User"
       },
-      "modifiedBy":{
+      "modifiedById":{
          "type":"belongsTo",
          "entity":"User"
       },
-      "assignedUser":{
+      "assignedUserId":{
          "type":"belongsTo",
          "entity":"User"
-      },
-      "teams":{
-         "type":"hasMany",
-         "entity":"Team",
-         "relationName":"EntityTeam"
-      },
-      "account":{
-         "type":"belongsTo",
-         "entity":"Account",
-         "foreign":"projects"
-      },
-      "projectTasks":{
-         "type":"hasMany",
-         "entity":"ProjectTask",
-         "foreign":"project"
       }
    },
    "collection":{

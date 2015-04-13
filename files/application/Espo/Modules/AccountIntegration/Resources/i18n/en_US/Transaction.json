@@ -4,9 +4,21 @@
    },
    "fields":{
       "accountId":"Account Id",
-      "transactionId":"Transaction Id"
+      "transactionId":"Transaction Id",
+      "transactionType":"Transaction Type",
+      "date": "Date",
+      "transNumber":"Transaction Number",
+      "acctNumber":"Account Number",
+      "item":"Item",
+      "memo": "Memo",
+      "qty": "Quantity",
+      "price":"Price",
+      "total":"Total",
+      "createdAt":"Created At",
+      "modifiedAt":"Modified At",
+      "createdById":"Created By",
+      "modifiedById":"Modified By",
+      "assignedUserId":"Assigned To"
    },
-   "links":{
-      "projectTasks":"Project Tasks"
-   }
+   "links":{}
 }

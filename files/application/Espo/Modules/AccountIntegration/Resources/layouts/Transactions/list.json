@@ -1,1 +1,13 @@
-[{"name":"name","width":30,"link":true},{"name":"status"},{"name":"assignedUser"}]
+[
+  {
+    "name": "accountId",
+    "width": 30,
+    "link": true
+  },
+  {
+    "name": "transactionType"
+  },
+  {
+    "name": "assignedUserId"
+  }
+]
