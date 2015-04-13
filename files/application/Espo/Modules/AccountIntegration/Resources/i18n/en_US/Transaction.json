@@ -1,0 +1,12 @@
+{
+   "labels":{
+      "Create Transaction":"Create Transaction"
+   },
+   "fields":{
+      "accountId":"Account Id",
+      "transactionId":"Transaction Id"
+   },
+   "links":{
+      "projectTasks":"Project Tasks"
+   }
+}

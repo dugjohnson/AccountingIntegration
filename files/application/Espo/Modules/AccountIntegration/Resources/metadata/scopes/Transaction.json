@@ -1,0 +1,10 @@
+{
+    "entity": true,
+    "layouts": true,
+    "tab": true,
+    "acl": true,
+    "module": "AccountIntegration",
+    "customizable": true,
+    "stream": true,
+    "importable": true
+}

@@ -1,0 +1,8 @@
+{
+   "scopeNames":{
+      "Transaction":"Transaction"
+   },
+   "scopeNamesPlural":{
+	  "Transaction":"Transactions",
+   }
+}
