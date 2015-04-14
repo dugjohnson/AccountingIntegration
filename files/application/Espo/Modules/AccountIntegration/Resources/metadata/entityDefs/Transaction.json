@@ -16,6 +16,78 @@
             "P",
             "S"
          ]
+      },
+      "date":{
+         "type":"datetime",
+         "readOnly":true
+      },
+      "transNumber":{
+         "type":"varchar",
+         "required":true,
+         "maxLength" : 10
+      },
+      "acctNumber":{
+          "type":"varchar",
+         "required":true,
+         "maxLength" : 10
+      },
+      "item":{
+         "type":"varchar",
+         "required":true,
+         "maxLength" : 50
+      },
+      "memo":{
+         "type":"text"
+      },
+      "qty":{
+         "type":"int"
+      },
+      "price":{
+         "type":"decimal"
+      },
+      "total":{
+         "type":"decimal"
+      },
+      "createdAt":{
+         "type":"datetime",
+         "readOnly":true
+      },
+      "modifiedAt":{
+         "type":"datetime",
+         "readOnly":true
+      },
+      "createdById":{
+         "type":"link",
+         "readOnly":true
+      },
+      "modifiedById":{
+         "type":"link",
+         "readOnly":true
+      },
+      "assignedUserId":{
+         "type":"link",
+         "required":true
       }
+   },
+   "links":{
+      "createdById":{
+         "type":"belongsTo",
+         "entity":"User"
+      },
+      "modifiedById":{
+         "type":"belongsTo",
+         "entity":"User"
+      },
+      "assignedUserId":{
+         "type":"belongsTo",
+         "entity":"User"
+      }
+   },
+   "collection":{
+      "sortBy":"createdAt",
+      "asc":false,
+      "boolFilters":[
+         "onlyMy"
+      ]
    }
 }
