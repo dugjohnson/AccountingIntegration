@@ -64,7 +64,7 @@
          "type":"link",
          "readOnly":true
       },
-      "assignedUserId":{
+      "assignedUser":{
          "type":"link",
          "required":true
       }
@@ -78,7 +78,7 @@
          "type":"belongsTo",
          "entity":"User"
       },
-      "assignedUserId":{
+      "assignedUser":{
          "type":"belongsTo",
          "entity":"User"
       }

@@ -16,9 +16,9 @@
       "total":"Total",
       "createdAt":"Created At",
       "modifiedAt":"Modified At",
-      "createdById":"Created By",
-      "modifiedById":"Modified By",
-      "assignedUserId":"Assigned To"
+      "createdBy":"Created By",
+      "modifiedBy":"Modified By",
+      "assignedUser":"Assigned To"
    },
    "links":{}
 }
