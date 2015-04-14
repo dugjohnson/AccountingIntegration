@@ -56,11 +56,11 @@
          "type":"datetime",
          "readOnly":true
       },
-      "createdById":{
+      "createdBy":{
          "type":"link",
          "readOnly":true
       },
-      "modifiedById":{
+      "modifiedBy":{
          "type":"link",
          "readOnly":true
       },
@@ -70,11 +70,11 @@
       }
    },
    "links":{
-      "createdById":{
+      "createdBy":{
          "type":"belongsTo",
          "entity":"User"
       },
-      "modifiedById":{
+      "modifiedBy":{
          "type":"belongsTo",
          "entity":"User"
       },
