@@ -1,4 +1,4 @@
-<?
+<?php
 class AfterUninstall
 {
   public function run($conatiner)
