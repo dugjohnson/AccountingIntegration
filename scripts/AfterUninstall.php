@@ -1,3 +1,4 @@
+<?
 class AfterUninstall
 {
   public function run($conatiner)

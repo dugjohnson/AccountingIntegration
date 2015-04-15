@@ -1,7 +1,5 @@
 [
   {
-    "name": "accountId",
-    "width": 30,
-    "link": true
+    "name": "accountId"
   }
 ]
