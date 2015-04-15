@@ -3,22 +3,7 @@
       "Create Transaction":"Create Transaction"
    },
    "fields":{
-      "accountId":"Account Id",
-      "transactionId":"Transaction Id",
-      "transactionType":"Transaction Type",
-      "date": "Date",
-      "transNumber":"Transaction Number",
-      "acctNumber":"Account Number",
-      "item":"Item",
-      "memo": "Memo",
-      "qty": "Quantity",
-      "price":"Price",
-      "total":"Total",
-      "createdAt":"Created At",
-      "modifiedAt":"Modified At",
-      "createdBy":"Created By",
-      "modifiedBy":"Modified By",
-      "assignedUser":"Assigned To"
+      "accountId":"Account Id"
    },
    "links":{}
 }

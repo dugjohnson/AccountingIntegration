@@ -6,20 +6,6 @@
         {
           "name": "accountId"
         }
-      ],
-      [
-        {
-          "name": "transactionType"
-        },
-        {
-          "name": "date"
-        }
-      ],
-      [
-        {
-          "name": "memo",
-          "fullWidth": true
-        }
       ]
     ]
   }
