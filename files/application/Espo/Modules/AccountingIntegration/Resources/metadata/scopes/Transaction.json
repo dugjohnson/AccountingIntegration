@@ -3,7 +3,7 @@
     "layouts": true,
     "tab": true,
     "acl": true,
-    "module": "AccountIntegration",
+    "module": "AccountingIntegration",
     "customizable": true,
     "stream": false,
     "importable": true

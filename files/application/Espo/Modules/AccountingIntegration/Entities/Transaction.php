@@ -1,6 +1,6 @@
 <?php
 
-namespace Espo\Modules\AccountIntegration\Entities;
+namespace Espo\Modules\AccountingIntegration\Entities;
 
 class Transaction extends \Espo\Core\ORM\Entity
 {
