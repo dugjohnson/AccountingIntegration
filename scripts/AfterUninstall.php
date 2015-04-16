@@ -12,6 +12,7 @@ class AfterUninstall
                 unset($tabList[$key]);
             }
         }
+        $tabList = array_values($tabList);
       $config->set('tabList',$tabList);
     }
 
