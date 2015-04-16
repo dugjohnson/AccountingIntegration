@@ -1,9 +1,22 @@
 {
-   "labels":{
-      "Create Transaction":"Create Transaction"
-   },
-   "fields":{
-      "accountId":"Account Id"
-   },
-   "links":{}
+  "labels": {
+    "Create Transaction": "Create Transaction"
+  },
+  "fields": {
+    "accountId": "Account Id",
+    "transactionType": "Transaction Type",
+    "date": "Transaction Date",
+    "transNumber": "Transaction Number",
+    "acctNumber": "Account Number",
+    "item": "Item",
+    "memo": "Memo",
+    "qty": "Quantity",
+    "price": "Price",
+    "total": "Created At",
+    "modifiedAt": "Modified At",
+    "createdBy": "Created By",
+    "modifiedBy": "Modified By",
+    "assignedUser": "Assigned To"
+  },
+  "links": {}
 }
