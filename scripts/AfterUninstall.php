@@ -6,9 +6,9 @@ class AfterUninstall
     $config = $conatiner->get('config');
 
     $tabList = $config->get('tabList');
-    if (in_array('AccountingIntegration', $tabList)) {
+    if (in_array('Transaction', $tabList)) {
         foreach ($tabList as $key => $value) {
-            if ($value=="AccountingIntegration") {
+            if ($value=="Transaction") {
                 unset($tabList[$key]);
             }
         }
