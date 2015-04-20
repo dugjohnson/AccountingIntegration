@@ -1,0 +1,12 @@
+{
+    "name": "AccountIntegration",
+    "version": "1.0.1",
+    "acceptableVersions": [
+        ">=3.0.0"
+    ],
+    "releaseDate": "2015-04-10",
+    "author": "Atyantik Technologies",
+    "description": "Quickbook Account Integration Module.",
+    "delete": [
+    ]
+}

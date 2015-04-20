@@ -1,0 +1,10 @@
+{
+    "entity": true,
+    "layouts": true,
+    "tab": true,
+    "acl": true,
+    "module": "AccountingIntegration",
+    "customizable": true,
+    "stream": false,
+    "importable": true
+}

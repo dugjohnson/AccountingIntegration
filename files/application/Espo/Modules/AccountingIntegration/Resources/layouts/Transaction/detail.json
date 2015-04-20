@@ -1,0 +1,12 @@
+[
+  {
+    "label": "Transaction Detail",
+    "rows": [
+      [
+        {
+          "name": "accountId"
+        }
+      ]
+    ]
+  }
+]
