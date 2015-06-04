@@ -38,10 +38,10 @@
       "type": "int"
     },
     "price": {
-      "type": "decimal"
+      "type": "float"
     },
     "total": {
-      "type": "decimal"
+      "type": "float"
     },
     "createdAt": {
       "type": "datetime",

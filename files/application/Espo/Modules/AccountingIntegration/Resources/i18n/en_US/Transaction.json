@@ -12,11 +12,17 @@
     "memo": "Memo",
     "qty": "Quantity",
     "price": "Price",
-    "total": "Created At",
+    "total": "Total",
     "modifiedAt": "Modified At",
     "createdBy": "Created By",
     "modifiedBy": "Modified By",
     "assignedUser": "Assigned To"
+  },
+  "options": {
+    "transactionType": {
+      "P": "Purchase",
+      "S": "Sell"
+    }
   },
   "links": {}
 }

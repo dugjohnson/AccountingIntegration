@@ -1,5 +1,35 @@
 [
   {
     "name": "accountId"
+  },
+  {
+    "name": "acctNumber"
+  },
+  {
+    "name": "transNumber"
+  },
+  {
+    "name": "date"
+  },
+  {
+    "name": "transactionType"
+  },
+  {
+    "name": "item"
+  },
+  {
+    "name": "price"
+  },
+  {
+    "name": "memo"
+  },
+  {
+    "name": "qty"
+  },
+  {
+    "name": "total"
+  },
+  {
+    "name": "assignedUser"
   }
 ]
