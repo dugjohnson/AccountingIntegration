@@ -118,7 +118,7 @@ class dataUpload
         $txnRepository = $entityManager->getRepository('Transaction');
         $createdDate = new \DateTime();
 
-        $activeUser = $entityManager->getRepository('User')->get(1);
+        $activeUser = '555df15a7d1438edf';//$entityManager->getRepository('User')->get(1);
 
         foreach ($this->validateDataArray as $key => $row) {
             foreach ($row as $txnRow) {
@@ -142,20 +142,15 @@ class dataUpload
                     $txnEntity->set('createdAt', $createdDate);
                     $txnEntity->set('modifiedAt', $createdDate);
                     ///need to set current user id
-                    $txnRepository->relate($txnEntity, 'createdBy', $activeUser);
-                    $txnRepository->relate($txnEntity, 'modifiedBy', $activeUser);
-                    $txnRepository->relate($txnEntity, 'assignedUser', $activeUser);
-//                    $txnEntity->set('createdBy', $activeUser);
-//                    $txnEntity->set('modifiedBy', $activeUser);
-//                    $txnEntity->set('assignedUser', $activeUser);
+                    $txnEntity->set('createdById', $activeUser);
+                    $txnEntity->set('modifiedById', $activeUser);
+                    $txnEntity->set('assignedUserId', $activeUser);
 
                     $txnEntity->set('txnOther1', $txnRow[self::TXN_OTHER_INDEX1]);
                     $txnEntity->set('txnOther2', $txnRow[self::TXN_OTHER_INDEX2]);
                     $txnEntity->set('txnDescription', $txnRow[self::TXN_DESC_INDEX]);
-                    //echo get_class($txnEntity->get('createdBy'));
-                    $entityManager->saveEntity($txnEntity);
-                    $txnEntity =null;
 
+                    $entityManager->saveEntity($txnEntity);
                 } else {
                     $this->uploadStatastics["RECORDS_ALREADY_EXIST"]++;
                 }
@@ -205,7 +200,7 @@ class dataUpload
 
             if ($row[self::ACCOUNT_NO_INDEX] == "") {
                 $this->uploadStatastics["RECORD_REJECTED"]++;
-                countinue;
+                continue;
             } else if ($row[self::PRICE_INDEX] > 0 && $row[self::QTY_INDEX] > 0) {
                 $dateTime = new \DateTime();
                 $dateTime = $dateTime->createFromFormat('m/d/Y', $row[self::TXN_DATE_INDEX]);
