@@ -62,6 +62,19 @@
     "assignedUser": {
       "type": "link",
       "required": true
+    },
+    "txnOther1": {
+      "type": "varchar",
+      "required": true,
+      "maxLength": 255
+    },
+    "txnOther2": {
+      "type": "varchar",
+      "required": true,
+      "maxLength": 255
+    },
+    "txnDescription": {
+      "type": "text"
     }
   },
   "links": {

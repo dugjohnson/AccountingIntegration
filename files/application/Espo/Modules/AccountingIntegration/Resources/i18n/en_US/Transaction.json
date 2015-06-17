@@ -16,7 +16,10 @@
     "modifiedAt": "Modified At",
     "createdBy": "Created By",
     "modifiedBy": "Modified By",
-    "assignedUser": "Assigned To"
+    "assignedUser": "Assigned To",
+    "txnOther1" : "Other 1",
+    "txnOther2" : "Other 2",
+    "txnDescription": "Transaction Description"
   },
   "options": {
     "transactionType": {

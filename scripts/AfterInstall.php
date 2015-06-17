@@ -3,7 +3,7 @@
 class AfterInstall
 {
     public function run($conatiner)
-    {
+    {	
         $config = $conatiner->get('config');
 
         $tabList = $config->get('tabList');
@@ -11,7 +11,7 @@ class AfterInstall
             $tabList[] = 'Transaction';
             $config->set('tabList', $tabList);
         }
-
+	
         $config->save();
     }
 }
