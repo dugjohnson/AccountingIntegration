@@ -1,28 +1,16 @@
 <?php
-/************************************************************************
- * This file is part of Quick Book Accounting System Integration.
- *
- * EspoCRM - Open Source CRM application.
- * Copyright (C) 2014-2015 Yuri Kuznetsov, Taras Machyshyn, Oleksiy Avramenko
- * Website: http://www.espocrm.com
- *
- * EspoCRM is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * EspoCRM is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with EspoCRM. If not, see http://www.gnu.org/licenses/.
- ************************************************************************/
-
 include "bootstrap.php";
 
-$app = new \Espo\Core\Application();
+class App extends \Espo\Core\Application {
+    public function setAuth($auth) {
+        $auth->useNoAuth(true);
+        $this->auth = $auth;
+
+    }
+}
+
+$app = new App();
+
 
 if (!$app->isInstalled()) {
     header("Location: install/");
@@ -34,6 +22,9 @@ if (!empty($_GET['entryPoint'])) {
     exit;
 }
 
+$app->setAuth(new \Espo\Core\Utils\Auth($app->getContainer()));
+//var_dump(get_class_methods(get_class())) ;
+//die;
 class dataUpload
 {
     const ACCOUNT_NO_INDEX = 2;
@@ -76,6 +67,7 @@ class dataUpload
         $this->slim = $app->getSlim();
         $this->uploadFilePath = __DIR__ . '/data/upload/QB_' . substr(md5(time()), 0, 10) . '.csv';
         $this->uploadStatastics = array("TOTAL_RECORD" => 0, "RECORD_INSERTED" => 0, "RECORD_REJECTED" => 0, "RECORDS_VALIDATED" => 0, "RECORDS_ALREADY_EXIST" => 0);
+
     }
 
     public function run()
@@ -88,7 +80,6 @@ class dataUpload
         } else if ($this->slim->request->getMethod() == "GET") {
             $html .= "<h2>Error : </h2>";
         }
-        var_dump($this->app->getContainer()->get('user'));
         //var_dump(get_class_methods(get_class($this->app->getMetadata())) );
         $html .= '</body></html>';
         echo $html;
@@ -117,8 +108,9 @@ class dataUpload
         $entityManager = $this->app->getContainer()->get('entityManager');
         $txnRepository = $entityManager->getRepository('Transaction');
         $createdDate = new \DateTime();
+        //var_dump(get_class_methods(get_class($entityManager->getUser()))) ;die;
 
-        $activeUser = '555df15a7d1438edf';//$entityManager->getRepository('User')->get(1);
+        $activeUser = $this->app->getContainer()->get('user')->id;
 
         foreach ($this->validateDataArray as $key => $row) {
             foreach ($row as $txnRow) {
