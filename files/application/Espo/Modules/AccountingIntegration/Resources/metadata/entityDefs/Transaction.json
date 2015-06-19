@@ -22,9 +22,7 @@
       "maxLength": 10
     },
     "acctNumber": {
-      "type": "varchar",
-      "required": true,
-      "maxLength": 10
+      "type": "int"
     },
     "item": {
       "type": "varchar",
