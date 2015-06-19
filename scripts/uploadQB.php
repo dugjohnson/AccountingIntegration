@@ -1,16 +1,16 @@
 <?php
 include "bootstrap.php";
 
-class App extends \Espo\Core\Application {
-    public function setAuth($auth) {
+class App extends \Espo\Core\Application
+{
+    public function setAuth($auth)
+    {
         $auth->useNoAuth(true);
         $this->auth = $auth;
-
     }
 }
 
 $app = new App();
-
 
 if (!$app->isInstalled()) {
     header("Location: install/");
@@ -67,20 +67,18 @@ class dataUpload
         $this->slim = $app->getSlim();
         $this->uploadFilePath = __DIR__ . '/data/upload/QB_' . substr(md5(time()), 0, 10) . '.csv';
         $this->uploadStatastics = array("TOTAL_RECORD" => 0, "RECORD_INSERTED" => 0, "RECORD_REJECTED" => 0, "RECORDS_VALIDATED" => 0, "RECORDS_ALREADY_EXIST" => 0);
-
     }
 
     public function run()
     {
         $html = '<html><head></head><body>';
         $html .= $this->displayForm();
-
         if ($this->slim->request->getMethod() == "POST") {
             $this->doDataUploadTask();
         } else if ($this->slim->request->getMethod() == "GET") {
             $html .= "<h2>Error : </h2>";
         }
-        //var_dump(get_class_methods(get_class($this->app->getMetadata())) );
+
         $html .= '</body></html>';
         echo $html;
     }
@@ -92,6 +90,7 @@ class dataUpload
         if ($validated == true) {
             $this->mapWithDatabase();
         }
+
     }
 
     public function displayForm()
@@ -107,44 +106,48 @@ class dataUpload
     {
         $entityManager = $this->app->getContainer()->get('entityManager');
         $txnRepository = $entityManager->getRepository('Transaction');
+        $accountRepository = $entityManager->getRepository('Account');
         $createdDate = new \DateTime();
         //var_dump(get_class_methods(get_class($entityManager->getUser()))) ;die;
 
         $activeUser = $this->app->getContainer()->get('user')->id;
 
         foreach ($this->validateDataArray as $key => $row) {
-            foreach ($row as $txnRow) {
+            $accountObj = $accountRepository->where(array('accountNumber' => $key))->findOne();
+            if ($accountObj != null) {
+                foreach ($row as $txnRow) {
+                    $txnEntity = $txnRepository->where(array(
+                        'transNumber' => $txnRow[self::REF_NUMBER_INDEX],
+                        'acctNumber' => $txnRow[self::ACCOUNT_NO_INDEX],
+                    ))->findOne();
 
-                $txnEntity = $txnRepository->where(array(
-                    'transNumber' => $txnRow[self::REF_NUMBER_INDEX],
-                    'acctNumber' => $txnRow[self::ACCOUNT_NO_INDEX],
-                ))->findOne();
-                if ($txnEntity == null) {
-                    $txnEntity = $txnRepository->get();
-                    $txnEntity->set('accountId', $txnRow[0]);
-                    $txnEntity->set('transactionType', 'S');
-                    $txnEntity->set('date', $txnRow[self::TXN_DATE_INDEX]);
-                    $txnEntity->set('transNumber', $txnRow[self::REF_NUMBER_INDEX]);
-                    $txnEntity->set('acctNumber', $txnRow[self::ACCOUNT_NO_INDEX]);
-                    $txnEntity->set('item', $txnRow[self::ITEM_INDEX]);
-                    $txnEntity->set('memo', $txnRow[self::MEMO_INDEX]);
-                    $txnEntity->set('qty', $txnRow[self::QTY_INDEX]);
-                    $txnEntity->set('price', $txnRow[self::PRICE_INDEX]);
-                    $txnEntity->set('total', $txnRow[self::TOTAL_INDEX]);
-                    $txnEntity->set('createdAt', $createdDate);
-                    $txnEntity->set('modifiedAt', $createdDate);
-                    ///need to set current user id
-                    $txnEntity->set('createdById', $activeUser);
-                    $txnEntity->set('modifiedById', $activeUser);
-                    $txnEntity->set('assignedUserId', $activeUser);
+                    if ($txnEntity == null) {
+                        $txnEntity = $txnRepository->get();
+                        $txnEntity->set('accountId', $accountObj->id);
+                        $txnEntity->set('transactionType', 'S');
+                        $txnEntity->set('date', $txnRow[self::TXN_DATE_INDEX]);
+                        $txnEntity->set('transNumber', $txnRow[self::REF_NUMBER_INDEX]);
+                        $txnEntity->set('acctNumber', $txnRow[self::ACCOUNT_NO_INDEX]);
+                        $txnEntity->set('item', $txnRow[self::ITEM_INDEX]);
+                        $txnEntity->set('memo', $txnRow[self::MEMO_INDEX]);
+                        $txnEntity->set('qty', $txnRow[self::QTY_INDEX]);
+                        $txnEntity->set('price', $txnRow[self::PRICE_INDEX]);
+                        $txnEntity->set('total', $txnRow[self::TOTAL_INDEX]);
+                        $txnEntity->set('createdAt', $createdDate);
+                        $txnEntity->set('modifiedAt', $createdDate);
+                        ///need to set current user id
+                        $txnEntity->set('createdById', $activeUser);
+                        $txnEntity->set('modifiedById', $activeUser);
+                        $txnEntity->set('assignedUserId', $activeUser);
 
-                    $txnEntity->set('txnOther1', $txnRow[self::TXN_OTHER_INDEX1]);
-                    $txnEntity->set('txnOther2', $txnRow[self::TXN_OTHER_INDEX2]);
-                    $txnEntity->set('txnDescription', $txnRow[self::TXN_DESC_INDEX]);
+                        $txnEntity->set('txnOther1', $txnRow[self::TXN_OTHER_INDEX1]);
+                        $txnEntity->set('txnOther2', $txnRow[self::TXN_OTHER_INDEX2]);
+                        $txnEntity->set('txnDescription', $txnRow[self::TXN_DESC_INDEX]);
 
-                    $entityManager->saveEntity($txnEntity);
-                } else {
-                    $this->uploadStatastics["RECORDS_ALREADY_EXIST"]++;
+                        $entityManager->saveEntity($txnEntity);
+                    } else {
+                        $this->uploadStatastics["RECORDS_ALREADY_EXIST"]++;
+                    }
                 }
             }
         }
@@ -155,7 +158,6 @@ class dataUpload
     {
         $validated = false;
         $pathInfo = pathinfo($file['uploadFile']['name']);
-
         if ($file['uploadFile']['type'] != 'text/csv' || strtolower($pathInfo['extension']) != "csv") {
             $this->slim->flash("error", "Please upload only CSV file.");
             return $validated;
