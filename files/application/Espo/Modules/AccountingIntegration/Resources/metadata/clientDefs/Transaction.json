@@ -1,3 +1,16 @@
 {
-  "controller": "Controllers.Record"
+  "controller": "Controllers.Record",
+  "menu": {
+    "list": {
+      "buttons": [
+        {
+          "label": "Upload Transaction",
+          "link": "uploadQB.php",
+          "acl": "read",
+          "style": "warning",
+          "aclScope": "Transaction"
+        }
+      ]
+    }
+  }
 }
