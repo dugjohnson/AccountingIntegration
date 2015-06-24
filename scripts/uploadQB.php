@@ -113,7 +113,7 @@ class dataUpload
         $activeUser = $this->app->getContainer()->get('user')->id;
 
         foreach ($this->validateDataArray as $key => $row) {
-            $accountObj = $accountRepository->where(array('accountNumber' => $key))->findOne();
+            $accountObj = $accountRepository->where(array('qbAccount' => $key))->findOne();
             if ($accountObj != null) {
                 foreach ($row as $txnRow) {
                     $txnEntity = $txnRepository->where(array(
