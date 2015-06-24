@@ -19,7 +19,8 @@
     "assignedUser": "Assigned To",
     "txnOther1" : "Other 1",
     "txnOther2" : "Other 2",
-    "txnDescription": "Transaction Description"
+    "txnDescription": "Transaction Description",
+    "account": "Account Company"
   },
   "options": {
     "transactionType": {
@@ -27,5 +28,7 @@
       "S": "Sell"
     }
   },
-  "links": {}
+  "links": {
+        "account": "Account Company"
+    }
 }

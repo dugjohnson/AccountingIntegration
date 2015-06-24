@@ -98,10 +98,11 @@ class dataUpload
         $html = '<form action="" method="post" enctype="multipart/form-data"><label>Upload Quickbook Transaction CSV file.</label><input type="file" name="uploadFile" id="uploadFile">';
         $html .= '<input type="submit" name="submit" id="submit" value="Submit" >';
         $html .= '</form>';
+        $link = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].'/#Transaction';
+        $html .= '<a href="'.$link.'">Back To Transaction</a>';
 
         return $html;
     }
-
     public function mapWithDatabase()
     {
         $entityManager = $this->app->getContainer()->get('entityManager');
