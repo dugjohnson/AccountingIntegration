@@ -76,10 +76,69 @@ class dataUpload
         $this->uploadFilePath = __DIR__ . '/data/upload/QB_' . substr(md5(time()), 0, 10) . '.csv';
         $this->uploadStatistics = array_fill_keys(array_keys($this->uploadStatisticsMessage),0);
     }
-
+    public function getStleSheet()
+    {
+        return  "<style type=\"text/css\">
+    * {
+        margin: 0;
+        padding: 0;
+    }    
+    body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 14px;
+    }    
+    a {
+        text-decoration: none;
+        padding: 5px;
+    }    
+    h3 {
+        color: red;
+        padding: 5px;
+    }    
+    table {     
+        text-align: left;
+    }    
+    th {
+        padding: 8px;
+        color: #999;
+        font-weight: 400;
+    }    
+    td {
+        padding: 8px;
+        border-top: 1px solid #e8eced;
+    }    
+    form {
+        background: #F5F1F1;
+        padding: 5px;
+    }    
+    .btn {
+        display: inline-block;
+        margin-bottom: 0;
+        font-weight: 400;
+        text-align: center;
+        vertical-align: middle;
+        cursor: pointer;
+        background-image: none;
+        border: 1px solid transparent;
+        white-space: nowrap;
+        padding: 6px 10px;
+        font-size: 14px;
+        line-height: 1.36;
+    }    
+    .btn-success {
+        background: #29C37D;
+        color: #fff;
+    }    
+    .btn-warning {
+        color: #fff;
+        background-color: #ef990e;
+        margin: 10px;
+    }
+    </style>";
+    }
     public function run()
     {
-        $html = '<html><head></head><body>';
+        $html = '<html><head>'.$this->getStleSheet().'</head><body>';
         $html .= $this->displayForm();
         if ($this->slim->request->getMethod() == "POST") {
             //$this->slim->redirect("/uploadQB.php",302);
@@ -93,7 +152,7 @@ class dataUpload
                 unset($_SESSION['ERROR']);
             }
             if (isset($_SESSION['UPLOAD_STATISTICS'])) {
-                $table="<table>";
+                $table="<table align=\"\" width=\"100%\">";
                 $table.="<tr><th>Upload Statistics</th><th>Record</th></tr>";
                 foreach($_SESSION['UPLOAD_STATISTICS'] as $key=>$noOfRecord) {
                     $table.= "<tr><td>".$this->uploadStatisticsMessage[$key]."</td><td>$noOfRecord</td></tr>";
@@ -121,10 +180,10 @@ class dataUpload
     public function displayForm()
     {
         $html = '<form action="" method="post" enctype="multipart/form-data"><label>Upload Quickbook Transaction CSV file.</label><input type="file" name="uploadFile" id="uploadFile">';
-        $html .= '<input type="submit" name="submit" id="submit" value="Submit" >';
+        $html .= '<input type="submit" name="submit" id="submit" value="Submit" class="btn btn-success" >';
         $html .= '</form>';
         $link = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . '/#Transaction';
-        $html .= '<a href="' . $link . '">Back To Transaction</a>';
+        $html .= '<a href="' . $link . '" class="btn btn-warning">Back To Transaction</a>';
 
         return $html;
     }
