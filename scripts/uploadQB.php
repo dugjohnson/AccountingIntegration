@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "bootstrap.php";
 
 class App extends \Espo\Core\Application
@@ -45,7 +46,14 @@ class dataUpload
     private $slim = null;
     private $uploadFilePath = null;
     private $validateDataArray = null;
-    private $uploadStatastics = array();
+    private $uploadStatistics = array();
+    private $uploadStatisticsMessage = array(
+        "RECORD_REJECTED" => "Number of record rejected",
+        "RECORDS_VALIDATED" => "Number of record validated",
+        "RECORDS_ALREADY_EXIST" => "Number of record already exist",
+        "QB_ACCOUNT_NOT_FOUND"=>"Number of record not found for Quickbook mapping",
+        "RECORD_INSERTED" => "Number of record inserted in csv",
+        "TOTAL_RECORD" => "Total record found in CSV.");
 
     public $validColumnList = array("TxnId",
         "Customer",
@@ -66,7 +74,7 @@ class dataUpload
         $this->app = $app;
         $this->slim = $app->getSlim();
         $this->uploadFilePath = __DIR__ . '/data/upload/QB_' . substr(md5(time()), 0, 10) . '.csv';
-        $this->uploadStatastics = array("TOTAL_RECORD" => 0, "RECORD_INSERTED" => 0, "RECORD_REJECTED" => 0, "RECORDS_VALIDATED" => 0, "RECORDS_ALREADY_EXIST" => 0);
+        $this->uploadStatistics = array_fill_keys(array_keys($this->uploadStatisticsMessage),0);
     }
 
     public function run()
@@ -74,9 +82,26 @@ class dataUpload
         $html = '<html><head></head><body>';
         $html .= $this->displayForm();
         if ($this->slim->request->getMethod() == "POST") {
+            //$this->slim->redirect("/uploadQB.php",302);
+            //$this->slim->response->redirect("uploadQB.php",301);
+            header("Location:" . $_SERVER['SCRIPT_NAME']);
             $this->doDataUploadTask();
+
         } else if ($this->slim->request->getMethod() == "GET") {
-            $html .= "<h2>Error : </h2>";
+            if (isset($_SESSION['ERROR'])) {
+                $html .= "<h2 style='color: red'>Error : " . $_SESSION['ERROR'] . "</h2>";
+                unset($_SESSION['ERROR']);
+            }
+            if (isset($_SESSION['UPLOAD_STATISTICS'])) {
+                $table="<table>";
+                $table.="<tr><th>Upload Statistics</th><th>Record</th></tr>";
+                foreach($_SESSION['UPLOAD_STATISTICS'] as $key=>$noOfRecord) {
+                    $table.= "<tr><td>".$this->uploadStatisticsMessage[$key]."</td><td>$noOfRecord</td></tr>";
+                }
+                $table.="</table>";
+                $html.=$table;
+                unset($_SESSION['UPLOAD_STATISTICS']);
+            }
         }
 
         $html .= '</body></html>';
@@ -98,11 +123,12 @@ class dataUpload
         $html = '<form action="" method="post" enctype="multipart/form-data"><label>Upload Quickbook Transaction CSV file.</label><input type="file" name="uploadFile" id="uploadFile">';
         $html .= '<input type="submit" name="submit" id="submit" value="Submit" >';
         $html .= '</form>';
-        $link = $_SERVER['REQUEST_SCHEME']."://".$_SERVER['HTTP_HOST'].'/#Transaction';
-        $html .= '<a href="'.$link.'">Back To Transaction</a>';
+        $link = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . '/#Transaction';
+        $html .= '<a href="' . $link . '">Back To Transaction</a>';
 
         return $html;
     }
+
     public function mapWithDatabase()
     {
         $entityManager = $this->app->getContainer()->get('entityManager');
@@ -147,12 +173,14 @@ class dataUpload
 
                         $entityManager->saveEntity($txnEntity);
                     } else {
-                        $this->uploadStatastics["RECORDS_ALREADY_EXIST"]++;
+                        $this->uploadStatistics["RECORDS_ALREADY_EXIST"]++;
                     }
                 }
+            } else {
+                $this->uploadStatistics["QB_ACCOUNT_NOT_FOUND"]++;
             }
         }
-
+        $_SESSION['UPLOAD_STATISTICS'] = $this->uploadStatistics;
     }
 
     public function doCustomValidation($file)
@@ -160,12 +188,14 @@ class dataUpload
         $validated = false;
         $pathInfo = pathinfo($file['uploadFile']['name']);
         if ($file['uploadFile']['type'] != 'text/csv' || strtolower($pathInfo['extension']) != "csv") {
-            $this->slim->flash("error", "Please upload only CSV file.");
+            $_SESSION["ERROR"] = "Please upload only CSV file.";
+            //$this->slim->flash("error", "Please upload only CSV file.");
             return $validated;
         }
 
         if (!move_uploaded_file($file['uploadFile']['tmp_name'], $this->uploadFilePath)) {
-            $this->slim->flash("error", "You do not have permission to upload file. please ask your system admin.");
+            $_SESSION["ERROR"] = "You do not have permission to upload file. please ask your system admin.";
+            //$this->slim->flash("error", "You do not have permission to upload file. please ask your system admin.");
 
             return $validated;
         }
@@ -175,11 +205,13 @@ class dataUpload
 
         // validate Header of csv FILE
         if (count($fileHeader) != count($this->validColumnList)) {
-            $this->slim->flash("error", "Please upload valid Quickbook CSV file.");
+            //$this->slim->flash("error", "Please upload valid Quickbook CSV file.");
+            $_SESSION["ERROR"] = "Please upload valid Quickbook CSV file.";
             return $validated;
 
         } else if (md5(var_export($fileHeader, 1)) != md5(var_export($this->validColumnList, 1))) {
-            $this->slim->flash("error", "First row of your csv file should contain below values <br>" . implode('<br>', $this->validColumnList));
+            //$this->slim->flash("error", "First row of your csv file should contain below values <br>" . implode('<br>', $this->validColumnList));
+            $_SESSION["ERROR"] = "First row of your csv file should contain below values <br>" . implode('<br>', $this->validColumnList);
             return $validated;
         }
         /*
@@ -191,10 +223,10 @@ class dataUpload
         $refNumber = 4; */
 
         while ($row = fgetcsv($fileOpen)) {
-            $this->uploadStatastics["TOTAL_RECORD"]++;
+            $this->uploadStatistics["TOTAL_RECORD"]++;
 
             if ($row[self::ACCOUNT_NO_INDEX] == "") {
-                $this->uploadStatastics["RECORD_REJECTED"]++;
+                $this->uploadStatistics["RECORD_REJECTED"]++;
                 continue;
             } else if ($row[self::PRICE_INDEX] > 0 && $row[self::QTY_INDEX] > 0) {
                 $dateTime = new \DateTime();
@@ -203,13 +235,13 @@ class dataUpload
                 if ($dateTime != null) {
                     $dateTime->setTime(0, 0, 0);
                     $row[self::TXN_DATE_INDEX] = $dateTime->format("Y-m-d H:i:s");
-                    $this->uploadStatastics["RECORDS_VALIDATED"]++;
+                    $this->uploadStatistics["RECORDS_VALIDATED"]++;
                     $this->validateDataArray[$row[self::ACCOUNT_NO_INDEX]][] = $row;
                 } else {
-                    $this->uploadStatastics["RECORD_REJECTED"]++;
+                    $this->uploadStatistics["RECORD_REJECTED"]++;
                 }
             } else {
-                $this->uploadStatastics["RECORD_REJECTED"]++;
+                $this->uploadStatistics["RECORD_REJECTED"]++;
             }
         }
 
