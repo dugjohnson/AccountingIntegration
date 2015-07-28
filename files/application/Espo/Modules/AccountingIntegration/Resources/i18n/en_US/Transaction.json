@@ -12,11 +12,23 @@
     "memo": "Memo",
     "qty": "Quantity",
     "price": "Price",
-    "total": "Created At",
+    "total": "Total",
     "modifiedAt": "Modified At",
     "createdBy": "Created By",
     "modifiedBy": "Modified By",
-    "assignedUser": "Assigned To"
+    "assignedUser": "Assigned To",
+    "txnOther1" : "Other 1",
+    "txnOther2" : "Other 2",
+    "txnDescription": "Transaction Description",
+    "account": "Account Company"
   },
-  "links": {}
+  "options": {
+    "transactionType": {
+      "P": "Purchase",
+      "S": "Sell"
+    }
+  },
+  "links": {
+        "account": "Account Company"
+    }
 }

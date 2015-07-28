@@ -1,10 +1,62 @@
 [
   {
-    "label": "Transaction Detail",
+    "label": "Basic Transaction Detail",
     "rows": [
       [
         {
           "name": "accountId"
+        }
+      ],
+      [
+        {
+          "name": "acctNumber",
+          "fullWidth": true
+        }
+      ]
+    ]
+  },
+  {
+    "label": "Advance Transaction Detail",
+    "rows": [
+      [
+        {
+          "name": "date"
+        },
+        {
+          "name": "transNumber"
+        }
+      ],
+      [
+        {
+          "name": "transactionType",
+          "fullWidth": true
+        }
+      ],
+      [
+        {
+          "name": "qty"
+        },
+        {
+          "name": "price"
+        }
+      ],
+      [
+        {
+          "name": "item"
+        },
+        {
+          "name": "total"
+        }
+      ]
+    ]
+  },
+  {
+    "label": "Other Detail",
+    "rows": [
+      [
+        {
+          "name": "memo",
+          "fullWidth": true
         }
       ]
     ]

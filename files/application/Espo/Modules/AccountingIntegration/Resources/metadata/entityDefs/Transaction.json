@@ -22,9 +22,7 @@
       "maxLength": 10
     },
     "acctNumber": {
-      "type": "varchar",
-      "required": true,
-      "maxLength": 10
+      "type": "int"
     },
     "item": {
       "type": "varchar",
@@ -38,10 +36,10 @@
       "type": "int"
     },
     "price": {
-      "type": "decimal"
+      "type": "float"
     },
     "total": {
-      "type": "decimal"
+      "type": "float"
     },
     "createdAt": {
       "type": "datetime",
@@ -62,6 +60,19 @@
     "assignedUser": {
       "type": "link",
       "required": true
+    },
+    "txnOther1": {
+      "type": "varchar",
+      "required": true,
+      "maxLength": 255
+    },
+    "txnOther2": {
+      "type": "varchar",
+      "required": true,
+      "maxLength": 255
+    },
+    "txnDescription": {
+      "type": "text"
     }
   },
   "links": {

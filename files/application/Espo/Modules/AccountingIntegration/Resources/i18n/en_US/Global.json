@@ -1,8 +1,8 @@
 {
-   "scopeNames":{
-      "Transaction":"Accounting Transaction"
-   },
-   "scopeNamesPlural":{
-	  "Transaction":"Accounting Transactions"
-   }
+  "scopeNames": {
+    "Transaction": "Accounting Transaction"
+  },
+  "scopeNamesPlural": {
+    "Transaction": "Accounting Transactions"
+  }
 }

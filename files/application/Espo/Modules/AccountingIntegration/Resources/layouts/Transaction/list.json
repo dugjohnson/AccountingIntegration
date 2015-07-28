@@ -1,5 +1,26 @@
 [
-  {
-    "name": "accountId"
-  }
+    {
+        "name": "account"
+    },
+    {
+        "name": "item"
+    },
+    {
+        "name": "txnDescription"
+    },
+    {
+        "name": "price"
+    },
+    {
+        "name": "qty"
+    },
+    {
+        "name": "total"
+    },
+    {
+        "name": "transNumber"
+    },
+    {
+        "name": "transactionType"
+    }
 ]
