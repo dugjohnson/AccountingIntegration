@@ -1,6 +1,6 @@
 {
   "name": "AccountIntegration",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "acceptableVersions": [
     ">=3.0.0"
   ],

@@ -143,9 +143,9 @@ class dataUpload
         if ($this->slim->request->getMethod() == "POST") {
             //$this->slim->redirect("/uploadQB.php",302);
             //$this->slim->response->redirect("uploadQB.php",301);
-            header("Location:" . $_SERVER['SCRIPT_NAME']);
             $this->doDataUploadTask();
-
+            header("Location:" . $_SERVER['SCRIPT_NAME']);
+            return;
         } else if ($this->slim->request->getMethod() == "GET") {
             if (isset($_SESSION['ERROR'])) {
                 $html .= "<h2 style='color: red'>Error : " . $_SESSION['ERROR'] . "</h2>";
@@ -246,7 +246,7 @@ class dataUpload
     {
         $validated = false;
         $pathInfo = pathinfo($file['uploadFile']['name']);
-        if ($file['uploadFile']['type'] != 'text/csv' || strtolower($pathInfo['extension']) != "csv") {
+        if (strtolower($pathInfo['extension']) != "csv") {
             $_SESSION["ERROR"] = "Please upload only CSV file.";
             //$this->slim->flash("error", "Please upload only CSV file.");
             return $validated;
