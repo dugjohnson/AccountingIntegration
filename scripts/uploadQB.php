@@ -205,6 +205,7 @@ class dataUpload
                     $txnEntity = $txnRepository->where(array(
                         'transNumber' => $txnRow[self::REF_NUMBER_INDEX],
                         'acctNumber' => $txnRow[self::ACCOUNT_NO_INDEX],
+                        'txnDescription'=> $txnRow[self::TXN_DESC_INDEX]
                     ))->findOne();
 
                     if ($txnEntity == null) {
