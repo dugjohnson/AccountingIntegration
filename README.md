@@ -6,6 +6,6 @@ Now you can generate extension easily using robo.phar .Please use below command 
 
 ```shell
 
-ajay@atwork1:~/Workspace/AI$ php robo.phar toZip
+ajay@atwork1:~/Workspace/AI$ php robo.phar tozip
 
 ```
