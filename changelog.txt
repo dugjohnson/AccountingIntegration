@@ -1,0 +1,4 @@
+Version 1.0.5
+---------------------------------------------------------
+    - change in import functionality, instead of transaction datetime we import only date portion.
+    - added RoboFile.php and robo.phar to generate Espocrm compatible extension.
