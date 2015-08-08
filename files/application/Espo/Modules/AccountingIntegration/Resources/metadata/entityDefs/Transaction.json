@@ -13,7 +13,7 @@
       ]
     },
     "date": {
-      "type": "datetime",
+      "type": "date",
       "readOnly": true
     },
     "transNumber": {
