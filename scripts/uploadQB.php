@@ -294,7 +294,7 @@ class dataUpload
                 // check if valid date and time format found or not
                 if ($dateTime != null) {
                     $dateTime->setTime(0, 0, 0);
-                    $row[self::TXN_DATE_INDEX] = $dateTime->format("Y-m-d H:i:s");
+                    $row[self::TXN_DATE_INDEX] = $dateTime->format("Y-m-d");
                     $this->uploadStatistics["RECORDS_VALIDATED"]++;
                     $this->validateDataArray[$row[self::ACCOUNT_NO_INDEX]][] = $row;
                 } else {
